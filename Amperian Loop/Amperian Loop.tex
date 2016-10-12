@@ -1,0 +1,97 @@
+\documentclass[tikz,border=1cm]{standalone}
+
+\usepackage{tikz,pgfplots}
+
+\usetikzlibrary{decorations.shapes}
+\usetikzlibrary{arrows.meta,calc,decorations.markings,math,arrows.meta}
+\usetikzlibrary{arrows,shapes,positioning}
+\usetikzlibrary{decorations.markings}
+
+%%%%%%%%%%%Todo está en 2D porque no entiendo 3D
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Dar dirección de las líneas (PONER FLECHITAS)
+\tikzstyle arrowstyle=[scale=1]
+\tikzstyle directed=[postaction={decorate,decoration={markings,
+    mark=at position .65 with {\arrow[arrowstyle]{stealth}}}}]
+\tikzstyle reverse directed=[postaction={decorate,decoration={markings,
+    mark=at position .65 with {\arrowreversed[arrowstyle]{stealth};}}}]    
+
+
+
+\begin{document}
+\begin{tikzpicture}[scale=2]
+%\draw (3.46,1.9) circle(2p);ESTA ES LAREFERENCIA PARA ANTES DE MOVER LAS COSAS
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 	SUPERFICIE
+\shadedraw[	top color =blue,				%%%%	Color de arriba
+			bottom color =blue,				%%%%	Color de abajo
+			middle color = white, 			%%	Color de en medio
+			shading angle = -22]			%%%%	Ángulo de gradiente
+			
+(0,1) ..controls (2, 0) and (3,3.5) .. (4,3.5) %	Aquí se dan las lineas
+-- (6,3) .. controls (5,3) and (4,-.5) .. (2,.5)%	A .. ctrls P and Q.. B 
+--(0,1);								%%%%%%%%%	P y Q jalan la linea de A a B
+\node  at (0,1.2) {Medio 1};
+\node at (0,.7) {Medio 2};
+\node[above] at (2.7,.3){$\vec{K}$};		 %%%%%%%%	Densidad sup. de corriente
+\draw[->, thick]  (3,.5)  -- (1.5,.95) ;  
+\draw[->, thick] (3.3,.6) -- (1.8,1.06);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	CIRCUITO
+\draw[densely dotted, line width=.2mm,black, reverse directed] 
+(3.0,1.4)-- (3.92,2.4)
+		-- (3.92,2.1)
+		-- (3.0,1.1)
+		-- (3.0,1.4);
+\draw[line width=.2mm, black, directed] 
+(3.0,1.4)--(3.92,2.4)		 
+ 		-- (3.92,2.7)		
+ 		-- (3.0,1.7) 
+ 		-- (3.0,1.4);
+ 							%%%%%%%%%	Estos ultimos son para colorear el circuitp
+\fill[orange,opacity = .3] (3.0,1.4)--(3.92,2.4)-- (3.92,2.7)-- (3.0,1.7)-- (3.0,1.4);
+\fill[orange,opacity = .2](3.0,1.1)--(3.92,2.1)-- (3.92,2.4)-- (3.0,1.4)-- (3.0,1.1);
+ 
+ 
+ 
+ %%%%%%%%%%%Se quitaron el teng y el paralelo porque no los necesité para 
+ %%%%%%%%%%%%% la deducción de lolas C.F. de los campos E.M.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	VECTOR TANGENCIAL
+%\draw[-> ,line width=.2mm, black]	
+% (3.46,1.9)--(2.8,2.15);	%%%%	Se toma un punto medio y se desplaza para dar profundidad
+%\path (3.46,1.9)--(2.8,2.15) node[color = black, below]{$\hat{t}_a$};%	Se etiqueta la flecha
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	VECTOR NORMAL
+\draw[ -> ,line width=.2mm, black]	
+ (3.46,1.9)--(3.46,2.6);	%%%%	Se toma un punto medio y se desplaza para dar profundidad
+\path (3.34,2.5) node[color = black, above]{$\hat{n}$};%	Se etiqueta la flecha
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	VECTOR paralelo
+%\draw[ -> ,line width=.2mm, black]	
+ %(3.46,1.9)--(3.0,1.4);	%%%%	Se toma un punto medio y se desplaza para dar profundidad
+%\path (3.0,1.4) node[color = red, black]{$\hat{t}_b$};%	Se etiqueta la flecha
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	LINEA DE LONGITUD
+\draw[|-|,line width=.2mm,black] (3.08+.1,1.1-.1)--(4+.1,2.1-.1);%		Se escogieron puntos arbitrarios
+\path (3.34+.4 ,1.8-.4) node[color = black]{$l$}  ;%	Se toma el punto medio y se traslada
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	LINEA DE ALTURA
+\draw[|-, densely dotted, line width=.2mm,black] (3.92+.2,2.1+.1)--(3.92+.2,2.4+.1);
+\draw[-|, line width=.2mm,black] (3.92+.2,2.4+.1)--(3.92+.2,2.7+.1);
+\path (3.92+.2,2.4+.1) node[color = black, right]{$\delta$};
+
+
+
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

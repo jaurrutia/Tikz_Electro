@@ -1,0 +1,197 @@
+\documentclass[tikz]{standalone}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{arrows}
+\usepackage{amsmath}
+\usetikzlibrary{3d}
+\usetikzlibrary{%
+    decorations.pathreplacing,%
+    decorations.pathmorphing%
+}
+\usepackage{tkz-euclide}
+\usetkzobj{all}
+\begin{document}
+\tdplotsetmaincoords{60}{120}
+
+% customized coordinate system
+\let\raarotold\raarot \let\rbarotold\rbarot
+\let\rabrotold\rabrot \let\rbbrotold\rbbrot
+\let\racrotold\racrot \let\rbcrotold\rbcrot
+
+\let\raarot\racrotold \let\rbarot\rbcrotold
+\let\rabrot\rabrotold \let\rbbrot\rbbrotold
+\let\racrot\raarotold \let\rbcrot\rbarotold
+\pgfmathsetmacro{\rvec}{.8}
+\pgfmathsetmacro{\thetavec}{30}
+\pgfmathsetmacro{\phivec}{60}
+\begin{tikzpicture}
+[
+       tdplot_main_coords,
+       scale=1,
+       tdplot_main_coords,
+       axis/.style={->,blue,thick},
+       vector/.style={-stealth,red,very thick},
+       vector guide/.style={dashed,red,thick}
+       ]
+%\coordinate (O) at (0,4,2);
+%\tdplotdrawarc{(O)}{0.4}{6}{\phivec}{anchor=north}{$\phi$}  
+%\draw[dashed] (3,4,0) arc (0:90:0.5);
+%\tdplotdrawarc{(0,4,0)}{0.5}{0}{\thetavec}{anchor=south west}{$\theta$}
+  % axes
+  \fill[green!10] (2,0,0) -- (3,0,0) -- (3,4,0) -- (0,4,0);
+  \fill[green!10] (2,8,0) -- (3,8,0) -- (3,4,0) -- (0,4,0);
+  \fill[green!10] (0,6.3,0) -- (0,8,0) -- (2,8,0);
+  \fill[green!10] (-2,0,0) -- (0,4,3) -- (-3.6,4,0) -- ( -3.5,0,0) ;
+  \fill[green!10] (0,8,3) -- (0,8,0) -- (-2,8,0);
+  \fill[green!10] (-3,4,0) -- (-2,8,0);
+  \fill[green!10] (-2,8,0) -- (-2,5.2,0)  -- (-3.6,5.2,0)--  (-3.6,8,0) ; 
+  \fill[green!10] (-2,5.2,0)  -- (-3.6,5.2,0) -- (-3.6,3.9,0); 
+  
+  
+ %plane background
+    \fill[red!10, dashed] (0,4,0) -- (2,8,0) -- (2,8,3) -- (0,4,3);
+      \fill[blue!10, dashed] (-.8,4.7,-.1) -- (-1.9,5.3,-0.6) -- (-2.2,5.1,2) -- (0,4,3);
+         \fill[orange!10, dashed] (2,0,0) -- (0,4,0) -- (0,4,3) -- (2,0,3);
+    
+\tdplotdrawarc{(0,4,0)}{0}{0}{\thetavec}{anchor=south west}{$\theta_r$}
+\draw[dashed, <->] (\rvec,4,0) arc (0:64:\rvec);
+\tdplotdrawarc{(0,3.4,0)}{0}{0}{\thetavec}{anchor=south west}{$\theta_i$}
+\draw[dashed, <->] (\rvec,4,0) arc (0:-64:\rvec);
+\tdplotdrawarc{(-.8,3.8,1)}{0}{0}{\thetavec}{anchor=south west}{$\theta_t$}
+\draw[dashed, <->](-.7,4.3,-.3) arc (157:190:0.8);
+\draw[->,help lines,shorten >=3pt, color = black](-.7,4,.5) .. controls (-.8,4) and (-.9,4.2) .. (-.7,4.1,-.3);
+
+
+
+
+
+
+
+  \path (0,1.1,2.5) -- (0,2,2.5) node[color=magenta, midway,left, sloped,xslant=0.5] {Interfaz};
+  \path (2.5,4,0) -- (2.5,5,0) node[color=black, midway,left, sloped,xslant=-0.3] {Plano de incidencia};
+  \draw[thick,->] (2,0,0) -- ( 3.5,0,0) node[anchor=south]{$y$};
+  \draw[thick,->] (0,6.5,0) -- ( 0,8.5,0) node[anchor=west]{$x$};
+  \draw[thick,->] (0,0,1) -- ( 0,0,3.5) node[anchor=north east]{$z$};  
+  \draw[thick]    (0,0,0) -- ( 0,0,0);
+  \draw[dashed,-] (0,0,0)-- (0,0,1) node[anchor=south west]{};
+ \draw[dashed,-] (0,0,0)-- (0,0,-3) ;
+  \draw[dashed,-] (0,0,0)-- (0,6.5,0) ;
+  \draw[dashed,-] (-3.5,0,0)-- (2,0,0);
+  
+  % vector 1
+  \pgfmathsetmacro{\ax}{1.8}
+  \pgfmathsetmacro{\ay}{7.6}
+  \pgfmathsetmacro{\az}{0}
+  \draw[very thick,->,red] (1,6,0) -- (\ax,\ay,\az);
+    \path[red] (1,6,0) -- (1.5,7,0) node[above]{$\vec{k}_r$};
+ % \draw[very thick,->,red] (1,6,0) -- (2,8,0) node[anchor=west]{$k_r$};
+  \draw[dashed,->,red] (1,6,0) -- (0.3,6.4,0);
+    % \path(1,2,0) -- (0.2,2,0) node[color= orange, right, sloped]{$\vec{B}_i$};
+    \path(0.7,6,0) -- (0.7,6.1,0) node[color= red, right ,xslant=-.7,yslant=.1 ]{$\vec{B}_r$};
+ % \path(.7,6.7,0) -- (0.6,6.8,0) node[color= red, above , sloped, xslant=-.9]{$\vec{B}_r$};
+  \draw[line width=.2mm,dotted, ->,red] (1,6,0) -- (0,5.1,-0.2);
+  % \path (-1,5,-.9) -- (-.2,5.2,-1) node[color= red,xslant=-.1]{$\vec{E}_r$};
+   \path(0,5.2,-.2) -- (.2,5.4,-.6) node[red,midway,above, sloped, xslant=-.8]{$\vec{E}_r$};
+     %\draw[line width=.2mm,dotted,->,orange] (1,2,0) -- (1,2,1) node[midway,above, sloped]{$\vec{E}_i$};
+    \draw[black] (0,4,0)-- (1,6,0); 
+  \draw[black] (1.8,7.6,0)-- (2,8,0); 
+
+  
+   % vector 2
+  \pgfmathsetmacro{\bx}{-1.6}
+  \pgfmathsetmacro{\by}{5.1}
+  \pgfmathsetmacro{\bz}{0}
+ % \draw[very thick,->,blue] (-1,4.7,0) -- (\bx,\by,\bz) node[right]{$\vec{k}_t$};
+   \draw[dashed,->,blue] (-1.1,4.8,-.3) -- (-2.,4.4,-0.4);
+   \path (-1.7,5,-.3) -- (-1.8,5.2,-0.4)node[color = blue,left,midway,sloped, xslant=-0.3]{$\vec{B}_t$};
+   %\path (-1.3,4.9,-.3) -- (-1.7,5.1,-0.4) node[color = blue, left, sloped, xslant=-0.4]{$\vec{B}_t$};
+  \draw[line width=.2mm,dotted,->,blue](-1.1,4.8,-.3)-- (-1.3,4.5,0.2);
+  %\path (-1.4,5,-1)-- (-1.3,4.5,0.5) node[color = blue, yslant=.5]{$\vec{E}_t$};
+  %\path (-1.3,5.6,-.4)-- (-1.3,5.2,0.7) node[color = blue,midway,above,sloped,xslant=-.8]{$\vec{E}_t$};
+  %\path (-1.1,4.8,.4)-- (-1.3,4.5,0.1)node[color = blue,midway,sloped,xslant=-.8]{$\vec{E}_t$};
+  \path (-1.5,4.2,-.4)-- (-1.7,3.9,0.4)node[color = blue,midway,sloped,xslant=-.2]{$\vec{E}_t$};
+     %\path(0,5.2,-.2) -- (.2,5.4,-.6) node[red,midway,above, sloped, xslant=-.8]{$\vec{E}_r$};
+  \draw[thick,->,blue] (-1.1,4.8,-.3) -- (-1.7,5.2,-.5);
+  \path (-1.,4.4,-.3) -- (-1.3,4.8,-.5)  node[right, color = blue]{$k_t$};
+  \draw[dashed,black] (0,4,0) -- (-1.1,4.8,-.3);
+   \draw[dashed, black] (-1.7,5.2,-.5) -- (-1.9,5.3,-.6);
+   \draw[black] (0,4,3)-- (-2.2,5.1,2);
+    % \draw[black] (-2.2,5.1,2) -- (-1.9,5.3,-.6);
+     \draw[black] (-2.2,5.1,2) -- (-1.9,5.3,0.2);
+     \draw[dashed,black] (-2.2,5.05,-.3) -- (-1.9,5.3,-0.6);
+      
+
+   % vector 3 
+  \pgfmathsetmacro{\cx}{0.5}
+  \pgfmathsetmacro{\cy}{3}
+  \pgfmathsetmacro{\cz}{0}
+  \draw[very thick,->,orange] (1,2,0) -- (\cx,\cy,\cz);
+    \path[orange] (-0.2,2,-1) -- (-0.1,2.1,-1.2)node[above]{$\vec{k}_i$};
+   \draw[dashed,->,orange] (1,2,0) -- (0.1,2,0);
+   \path(1,2,0) -- (0.2,2,0) node[color= orange, right, sloped]{$\vec{B}_i$};
+  \draw[line width=.2mm,dotted,->,orange] (1,2,0) -- (1,2,1) node[midway,above, sloped]{$\vec{E}_i$};
+  
+  %vector normal
+   \draw[very thick,->,black] (0,4,0) -- (1.8,4,0)  node[right]{$\widehat{u}_{_n}$};
+    %\path (0,4,0) -- (1.8,4,0)  node[right]{$\widehat{u}_n$}; 
+  
+  
+ % \pgfmathsetmacro{\dx}{2}
+  %\pgfmathsetmacro{\dy}{4}
+  %\pgfmathsetmacro{\dz}{0}
+  %\draw[gray] (0,4,0) -- (\dx,\dy,\dz); 
+
+  \pgfmathsetmacro{\ex}{0.5}
+  \pgfmathsetmacro{\ey}{3}
+  \pgfmathsetmacro{\ez}{0}
+  \draw[black] (0,4,0) -- (\ex,\ey,\ez); 
+
+  \pgfmathsetmacro{\ex}{2}
+  \pgfmathsetmacro{\ey}{0}
+  \pgfmathsetmacro{\ez}{0}
+  \draw[black] (1,2,0) -- (\ex,\ey,\ez);
+
+
+
+
+   % dashed lines
+%  \draw[dashed,gray] (\ax,\ay,\az) -- (\ax,\ay,0);
+  \draw[black] (0,4,3)--(0,0,3);
+   \draw[black] (0,4,0)-- (0,4,3);
+   %\draw[gray] (0,4,0)-- (2,4,0);
+    \draw[dashed,black] (-1.35,4,0)-- (0,4,0); 
+        \draw[dashed,black] (-2,4,0)-- (-1.85,4,0); 
+    %\draw[gray] (0,4,0)-- (2,0,0); 
+    \draw[black] (0,4,3)-- (2,0,3);
+     \draw[black] (2,0,3)-- (2,0,0); 
+      %\draw[gray] (0,4,0)-- (2,8,0); 
+       \draw[black] (0,4,3)-- (2,8,3); 
+       %\draw[black] (0,4,3)-- (0,8,3); 
+       \draw[dashed, black] (0,4,3)-- (0,6.9,3); 
+       \draw[black] (0,6.9,3)-- (0,8,3); 
+       \draw[black] (0,8,3)-- (0,8,0); 
+       \draw[black] (2,8,3)-- (2,8,0); 
+       %\draw[gray] (0,4,3)-- (-2,5,3);
+       %\draw[gray] (-2,5,3) -- (-2,5,0);
+       %\draw[dashed,gray] (0,4,0) -- (-2,5,0);
+       \draw[black] (0,8,0)-- (0,8,-2.5); 
+       \draw[black] (0,8,-2.5)-- (0,6.6,-2.5); 
+    %\fill[gray!20] (O) -- (H) -- (E) -- (F) -- cycle;
+
+    %\fill[blue!20] (O) -- (D) -- (H) -- cycle;
+  %\draw[dashed,gray] (\ax,\ay,\az) -- (0,\ay,\az);
+%  \draw[dashed,gray] (\ax,0,0) -- (\ax,\ay,0) -- (0,\ay,0);
+  %\draw[dashed,gray] (\ax,0,0) -- (\ax,0,\az) -- (0,0,\az);
+  %\draw[dashed,gray] (0,0,\az) -- (0,\ay,\az) -- (0,\ay,0);
+
+  % arcs
+
+  %\tdplotdefinepoints(0,0,0)(0.5,3.5,0)(1,5,0)
+  %\tdplotdrawpolytopearc[<->]{2}{anchor=north west}{$\theta$}
+  %\tdplotdefinepoints(0,0,0)(0,0,1)(\bx,\by,\bz)
+  %\tdplotdrawpolytopearc[<->]{3}{anchor=north}{$\beta$}
+  %\tdplotdefinepoints(0,0,0)(1,0,0)(\cx,\cy,\cz)
+  %\tdplotdrawpolytopearc[<->]{4}{anchor=north}{$\phi$}
+
+
+\end{tikzpicture}
+\end{document}

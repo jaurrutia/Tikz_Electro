@@ -1,0 +1,83 @@
+\documentclass[tikz,border=1cm]{standalone}
+
+\usepackage{tikz,pgfplots}
+
+\usetikzlibrary{decorations.shapes}
+\usetikzlibrary{arrows.meta,calc,decorations.markings,math,arrows.meta}
+
+
+%%%%%%%%%%%%Todo está en 2D porque no entiendo 3D   :c
+
+
+\begin{document}
+\begin{tikzpicture}[scale=1.75]
+%\draw (3.46,1.9) circle(2pt);ESTA ES LAREFERENCIA PARA ANTES DE MOVER LAS COSAS
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 	SUPERFICIE
+\shadedraw[	top color =blue,				%%%%	Color de arriba
+			bottom color =blue,				%%%%	Color de abajo
+			middle color = white, 			%%	Color de en medio
+			shading angle = -22]			%%%%	Ángulo de gradiente
+			
+(0,1) ..controls (2, 0) and (3,3.5) .. (4,3.5) %	Aquí se dan las lineas
+-- (6,3) .. controls (5,3) and (4,-.5) .. (2,.5)%	A .. ctrls P and Q.. B 
+--(0,1);								%%%%%%%%%	P y Q jalan la linea de A a B
+\path (2,.5) node[color = black, above]{$\sigma$};
+\node[black]
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	PILL-BOX
+\fill[orange, opacity = .3]						%%%%%%%%	Cara del cilindro
+ (3.46-.5,2.05) arc(180: 0: .5 and .1)			%%%%%%%% 	se pone el principio pero es
+-- (3.46+.5,1.75) arc(0: -180: .5 and .1)		%%%%%%%		lo ultimo que puedo escribir
+-- (3.46-.5,2.05);
+
+\draw[black](3.46,2.05) circle (.5 and .1)		%%%%%%		Centro y radios de curvatura
+(3.46+.5,2.05)node[ left]{$\delta_A$};	%%%%		Etiqueta del área
+\fill[orange, opacity = .1] (3.46,2.05) circle (.5 and .1); 
+
+\draw[black](3.46,1.9)  circle (.5 and .1);
+\fill[orange,opacity = .1](3.46,1.9)  circle (.5 and .1);
+
+\draw[densely dotted, black](3.46,1.75)  circle (.5 and .1);
+\fill[orange,opacity = .1](3.46,1.75)  circle (.5 and .1);
+
+\draw[black, line width = .2mm]						%%%%%%	Lineas que faltó llenar
+(3.46-.5,2.05) -- (3.46-.5,1.9)		(3.46+.5,2.05) -- (3.46+.5,1.9);
+\draw[densely dotted, black, line width = .2mm]
+(3.46-.5,1.9) -- (3.46-.5,1.75)		(3.46+.5,1.9) -- (3.46+.5,1.75);
+ 
+ 
+ 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	VECTOR NORMAL (Perp)
+\draw[ -> ,line width=.2mm, red]	
+ (3.46,2.05)--(3.46,2.6+.1);	%%%%	Se toma un punto medio y se desplaza para dar profundidad
+\node[color = red, above] at (3.46,2.6+.1) {$\vec{a}_t$};%	Se etiqueta la flecha
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	VECTOR NORMAL (Paralelo)
+\draw[-> ,line width=.2mm, red]	
+ (3.46-.5+.3, 1.9)-- (3.46-.5-.1,1.95-.2);	
+\node[color = red, left] at (3.46-.5-.1,1.95-.2) {$\vec{a}_c$};%	Se etiqueta la flecha
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	LINEA DE ALTURA
+\draw[|-, line width=.2mm,black]
+(3.46+.5+.1,2.05) -- (3.46+.5+.1, 1.9);
+\draw[-|, densely dotted, line width=.2mm,black]
+(3.46+.5+.1,1.9) -- (3.46+.5+.1,1.75);
+\node[color = black, right] at (3.46+.5+.1,1.9) {$\delta$};
+
+
+
+
+
+
+
+
+
+\end{tikzpicture}
+\end{document}

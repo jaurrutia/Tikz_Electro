@@ -1,0 +1,57 @@
+\documentclass[tikz,border=1cm]{standalone}
+
+\usepackage{tikz,pgfplots}
+
+\usetikzlibrary{decorations.shapes}
+\usetikzlibrary{arrows.meta,calc,decorations.markings,math,arrows.meta}
+
+\usetikzlibrary{arrows,shapes,positioning}
+\usetikzlibrary{decorations.markings}
+\tikzstyle arrowstyle=[scale=1]
+\tikzstyle directed=[postaction={decorate,decoration={markings,
+    mark=at position .65 with {\arrow[arrowstyle]{stealth}}}}]
+\tikzstyle reverse directed=[postaction={decorate,decoration={markings,
+    mark=at position .65 with {\arrowreversed[arrowstyle]{stealth};}}}]
+
+%%%%%%%%%%%%Todo está en 2D porque no entiendo 3D
+
+
+\begin{document}
+\begin{tikzpicture}
+%\draw (3.46,1.9) circle(2pt);ESTA ES LAREFERENCIA PARA ANTES DE MOVER LAS COSAS
+
+% define coordinates
+\coordinate (O) at (0,0) ;
+\coordinate (A) at (0,4) ;
+\coordinate (B) at (0,-4) ;
+    
+% media
+\fill[blue!25!,opacity=.3] (-4,0) rectangle (4,4);
+\fill[blue!60!,opacity=.3] (-4,0) rectangle (4,-4);
+\node[above] at (-3.7,0) {Air};
+\node[below] at (-3.4,0) {Water};
+
+% axis
+\draw[dashed] (A) -- (B);
+\draw[]
+
+    % rays
+    \draw[red,ultra thick,reverse directed] (O) -- (130:5.2);
+    \draw[blue,directed,ultra thick] (O) -- (-70:4.24);
+
+    % angles
+    \draw (0,1) arc (90:130:1);
+    \draw (0,-1.4) arc (270:290:1.4) ;
+    \node[] at (280:1.8)  {$\theta_{2}$};
+    \node[] at (110:1.4)  {$\theta_{1}$};
+\end{tikzpicture}
+
+
+
+
+
+
+
+
+
+\end{document}
