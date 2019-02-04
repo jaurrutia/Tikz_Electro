@@ -1,4 +1,4 @@
-\documentclass[tikz,border=1cm]{standalone}
+\documentclass[tikz,crop]{standalone}
 
 \usepackage{tikz,pgfplots}
 
@@ -18,26 +18,28 @@
 
 
 \begin{document}
-\begin{tikzpicture}[scale=2]
+\begin{tikzpicture}%[scale=1.5]
 %\draw (3.46,1.9) circle(2p);ESTA ES LAREFERENCIA PARA ANTES DE MOVER LAS COSAS
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 	SUPERFICIE
+%--------------------------------------------------- 	SUPERFICIE
+
+
 \shadedraw[	top color =blue,				%%%%	Color de arriba
 			bottom color =blue,				%%%%	Color de abajo
 			middle color = white, 			%%	Color de en medio
-			shading angle = -22]			%%%%	Ángulo de gradiente
+			shading angle = -18]			%%%%	Ángulo de gradiente
 			
-(0,1) ..controls (2, 0) and (3,3.5) .. (4,3.5) %	Aquí se dan las lineas
--- (6,3) .. controls (5,3) and (4,-.5) .. (2,.5)%	A .. ctrls P and Q.. B 
---(0,1);								%%%%%%%%%	P y Q jalan la linea de A a B
-\node  at (0,1.2) {Medio 1};
-\node at (0,.7) {Medio 2};
-\node[above] at (2,.5){$\vec{K}$};		 %%%%%%%%	Densidad sup. de corriente
-\draw[->, thick] (3,.5) -- (1.5,.95);  
-\draw[->, thick] (3.3,.6) -- (1.8,1.06);
+(-1,1) ..controls (2, 0) and (3,3.5) .. (4.5,3.5) %	Aquí se dan las lineas
+-- (7,3.2) .. controls (5,3) and (4,-.5) .. (2.5,.5)%	A .. ctrls P and Q.. B 
+--(-1,1);								%%%%%%%%%	P y Q jalan la linea de A a B
+\node[color = black] at (3,.7) {\Large $\vec{K}$};
+\node  at (0,1.1) {Medio 1};
+\node at (0,.5) {Medio 2};
+\draw[->, thick]  (2.4,.78)  -- (1.4,.9) ;  
+\draw[->, thick]  (2.7,.88)  -- (1.7,1) ; 
+\draw[->, thick]  (3,.98)  -- (2,1.1) ; 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	CIRCUITO
+%---------------------------------------------------	CIRCUITO
 \draw[densely dotted, line width=.2mm,black, reverse directed] 
 (3.0,1.4)-- (3.92,2.4)
 		-- (3.92,2.1)
@@ -55,18 +57,18 @@
  
  
  %%%%%%%%%%%Se quitaron el teng y el paralelo porque no los necesité para 
- %%%%%%%%%%%%% la deducción de lolas C.F. de los campos E.M.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	VECTOR TANGENCIAL
+ %%%%%%%%%%%%% la deducción de las C.F. de los campos E.M.
+%---------------------------------------------------	VECTOR TANGENCIAL
 %\draw[-> ,line width=.2mm, black]	
 % (3.46,1.9)--(2.8,2.15);	%%%%	Se toma un punto medio y se desplaza para dar profundidad
 %\path (3.46,1.9)--(2.8,2.15) node[color = black, below]{$\hat{t}_a$};%	Se etiqueta la flecha
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	VECTOR NORMAL
+%---------------------------------------------------	VECTOR NORMAL
 \draw[ -> ,line width=.2mm, black]	
  (3.46,1.9)--(3.46,2.6);	%%%%	Se toma un punto medio y se desplaza para dar profundidad
-\path (3.34,2.5) node[color = black, above]{$\hat{n}$};%	Se etiqueta la flecha
+\path (3.34,2.5) node[color = black, above]{\Large $\hat{u}$};%	Se etiqueta la flecha
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	VECTOR paralelo
+%---------------------------------------------------	VECTOR paralelo
 %\draw[ -> ,line width=.2mm, black]	
  %(3.46,1.9)--(3.0,1.4);	%%%%	Se toma un punto medio y se desplaza para dar profundidad
 %\path (3.0,1.4) node[color = red, black]{$\hat{t}_b$};%	Se etiqueta la flecha
@@ -76,22 +78,13 @@
 
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	LINEA DE LONGITUD
+%---------------------------------------------------      LINEA DE LONGITUD
 \draw[|-|,line width=.2mm,black] (3.08+.1,1.1-.1)--(4+.1,2.1-.1);%		Se escogieron puntos arbitrarios
-\path (3.34+.4 ,1.8-.4) node[color = black]{$l$}  ;%	Se toma el punto medio y se traslada
+\path (3.34+.4 ,1.8-.4) node[color = black]{\Large $l$}  ;%	Se toma el punto medio y se traslada
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	LINEA DE ALTURA
+%---------------------------------------------------	LINEA DE ALTURA
 \draw[|-, densely dotted, line width=.2mm,black] (3.92+.2,2.1+.1)--(3.92+.2,2.4+.1);
 \draw[-|, line width=.2mm,black] (3.92+.2,2.4+.1)--(3.92+.2,2.7+.1);
-\path (3.92+.2,2.4+.1) node[color = black, right]{$\delta$};
-
-
-
-
-
-
-
-
+\path (3.92+.2,2.4+.1) node[color = black, right]{\Large $ \delta$};
 \end{tikzpicture}
 \end{document}

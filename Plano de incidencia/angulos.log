@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2016.4.12)  5 OCT 2016 07:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2016.4.12)  8 MAR 2017 08:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -609,7 +609,7 @@ File: tkz-tool-arith.tex tkz-tool-arith 1.161 c
 (c:/texlive/2015/texmf-dist/tex/latex/tkz-euclide/tkz-obj-sectors.tex)
 (c:/texlive/2015/texmf-dist/tex/latex/tkz-euclide/tkz-obj-angles.tex)
 (c:/texlive/2015/texmf-dist/tex/latex/tkz-euclide/tkz-obj-protractor.tex)
-No file angulos.aux.
+(./angulos.aux)
 \openout1 = `angulos.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
@@ -624,7 +624,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
-ABD: EveryShipout initializing macros
+ ABD: EveryShipout initializing macros
 (c:/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count146
@@ -681,9 +681,9 @@ e
 {c:/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./angulos.aux)
  ) 
 Here is how much of TeX's memory you used:
- 17187 strings out of 493027
- 351565 string characters out of 6137684
- 424838 words of memory out of 5000000
+ 17189 strings out of 493027
+ 351589 string characters out of 6137684
+ 424839 words of memory out of 5000000
  20328 multiletter control sequences out of 15000+600000
  4094 words of font info for 16 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
