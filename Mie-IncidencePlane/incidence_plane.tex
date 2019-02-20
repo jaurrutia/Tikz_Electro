@@ -1,0 +1,158 @@
+%% Copyright 2009 Jeffrey D. Hein
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is Jeffrey D. Hein.
+%
+% This work consists of the files 3dplot.sty and 3dplot.tex
+
+%Description
+%-----------
+%3dplot.tex - an example file demonstrating the use of the 3dplot.sty package.
+
+%Created 2009-11-07 by Jeff Hein.  Last updated: 2009-11-09
+%----------------------------------------------------------
+
+%Update Notes
+%------------
+
+%2009-11-07: Created file along with 3dplot.sty package
+
+
+\documentclass{article}
+\usepackage{tikz}   %TikZ is requigreen for this to work.  Make sure this exists before the next line
+
+\usepackage{tikz-3dplot} %requires tikz-3dplot.sty to be in same directory, or in your LaTeX installation
+\usepackage{physics}
+\usepackage[active,tightpage]{preview}  %generates a tightly fitting border around the work
+\PreviewEnvironment{tikzpicture}
+\usetikzlibrary{hobby}  
+\setlength\PreviewBorder{2mm}
+
+\begin{document}
+
+%Angle Definitions
+%-----------------
+
+%set the plot display orientation
+%synatax: \tdplotsetdisplay{\theta_d}{\varphi_d}
+\tdplotsetmaincoords{60}{110}
+
+%define polar coordinates for some vector
+%TODO: look into using 3d spherical coordinate system
+\pgfmathsetmacro{\rvec}{1.3}
+\pgfmathsetmacro{\thetavec}{30}
+\pgfmathsetmacro{\varphivec}{60}
+
+%start tikz picture, and use the tdplot_main_coords style to implement the display 
+%coordinate transformation provided by 3dplot
+\begin{tikzpicture}[scale=5,tdplot_main_coords]
+
+
+%draw the NP
+%	\shade[ball color=yellow, opacity = .7] (0,0,0) ellipse (.8/10 and .55/10); 
+%	\draw(0,0,0)  ellipse (.4/20 and .55/10);
+	
+	\shade[draw,use Hobby shortcut,closed=true, ball color=yellow, rotate=0, scale = .1]
+	(.2,-.15) .. (.05,.1) .. (.1,.3) .. (.03,.4) .. (-.1,.2) .. (-.1,.05);
+
+
+%set up some coordinates 
+	\coordinate (O) at (0,0,0);
+
+%determine a coordinate (P) using (r,\theta,\varphi) coordinates.  This command
+%also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
+%of the point (P).
+%syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\varphi}
+	\tdplotsetcoord{P}{\rvec}{\thetavec}{\varphivec}
+
+%draw figure contents
+%--------------------
+%draw the main coordinate system axes
+	\draw[thick,- latex] (0,0,0) -- (1.5,0,0) node[anchor=north east]{$x$};
+	\draw[thick,- latex] (0,0,0) -- (0,1.5,0) node[anchor=north west]{$y$};
+	\draw[thick,- latex] (0,0,0) -- (0,0,1.5) node[anchor=south]{$z$};
+
+%draw the main cartesian vector system 
+	\draw[thick,- latex, blue] (0,0,0) -- (1,0,0) node[anchor= south east]{$\vu{e}_x$};
+	\draw[thick,- latex, blue] (0,0,0) -- (0,1,0) node[anchor=north west]{$\vu{e}_y$};
+	\draw[thick,- latex, blue] (0,0,0) -- (0,0,1) node[anchor= east]{$\vu{e}_z$};
+
+%draw a vector from origin to point (P) 
+	\draw[thick,color=green, - latex] (O) -- (P);
+	\node at (1,.6,1.2) {\color{green} $\vb{r}$};
+
+%draw projection on xy plane, and a connecting line
+	\draw[dashed, color=green] (O) -- (Pxy);
+	\draw[dashed, color=green] (P) -- (Pxy);
+	\fill[green, opacity = .3] (O) --(Pxy)-- (P)--(O);
+	\node at (1,1,.8) {\color{green} Plano de};
+	\node at (1,1,.7) {\color{green} incidencia};
+
+%draw the angle \varphi, and label it
+	%syntax: \tdplotdrawarc[coordinate frame, draw options]{center point}{r}{angle}{label options}{label}
+	\tdplotdrawarc[- latex]{(O)}{0.5}{0}{\varphivec}{anchor=south}{$\varphi$}
+
+
+%set the rotated coordinate system so the x'-y' plane lies within the
+	%"theta plane" of the main coordinate system
+	%syntax: \tdplotsetthetaplanecoords{\varphi}
+	\tdplotsetthetaplanecoords{\varphivec}
+
+%draw theta arc and label, using rotated coordinate system
+	\tdplotdrawarc[tdplot_rotated_coords, - latex]{(0,0,0)}{0.5}{0}{\thetavec}{anchor=north east}{$\theta$}
+
+%draw some dashed arcs, demonstrating direct arc drawing
+	\draw[dashed,tdplot_rotated_coords] (\rvec,0,0) arc (0:90:\rvec);
+	\draw[dashed] (\rvec,0,0) arc (0:90:\rvec);
+
+%set the rotated coordinate definition within display using a translation
+%coordinate and Euler angles in the "z(\alpha)y(\beta)z(\gamma)" euler rotation convention
+%syntax: \tdplotsetrotatedcoords{\alpha}{\beta}{\gamma}
+	\tdplotsetrotatedcoords{\varphivec}{\thetavec}{0}
+
+%translate the rotated coordinate system
+%syntax: \tdplotsetrotatedcoordsorigin{point}
+	\tdplotsetrotatedcoordsorigin{(P)}
+
+%use the tdplot_rotated_coords style to work in the rotated, translated coordinate frame
+	\draw[thick,tdplot_rotated_coords,- latex, purple] (0,0,0) -- (.3,0,0) node[anchor=north west]{$\vu{e}_\theta,\vu{e}_{\parallel,s}$};
+	\draw[thick,tdplot_rotated_coords,- latex,black] (0,0,0) -- (0,.3,0) node[anchor=west]{$\vu{e}_\varphi$};
+	\draw[thick,tdplot_rotated_coords,- latex,purple] (0,0,0) -- (0,-.3,0) node[anchor= north west]{$\vu{e}_{\perp,s}$};
+	\draw[thick,tdplot_rotated_coords,- latex,purple] (0,0,0) -- (0,0,.3) node[anchor=south]{$\vu{e}_r$ };
+
+
+
+%set the rotated coordinate definition within display using a translation
+%coordinate and Euler angles in the "z(\alpha)y(\beta)z(\gamma)" euler rotation convention
+%syntax: \tdplotsetrotatedcoords{\alpha}{\beta}{\gamma}
+	\tdplotsetrotatedcoords{\varphivec}{0}{0}
+
+%translate the rotated coordinate system
+%syntax: \tdplotsetrotatedcoordsorigin{point}
+	\tdplotsetrotatedcoordsorigin{(Pxy)}
+
+	\draw[thick,tdplot_rotated_coords,- latex, purple] (0,0,0) -- (.3,0,0) node[anchor= west]{$\vu{e}_{\parallel,i}$};
+	\draw[thick,tdplot_rotated_coords,- latex, blue] (0,0,0) -- (0,0,.3) node[anchor= west]{$\vu{e}_z$};	
+	\draw[thick,tdplot_rotated_coords,- latex, purple] (0,0,0) -- (0,-.3,0) node[anchor= north west]{$\vu{e}_{\perp,i}$};
+
+
+
+% Plane Wave
+	\foreach \i in {-7,...,-2}{
+		\draw[thick,tdplot_screen_coords,red, - latex] (\i/10,0,0)--(\i/10,1,0);}
+	\node[tdplot_screen_coords] at (-4.5/10,1.1,0){\color{red}$\va{k}_i$};
+	\node[tdplot_screen_coords] at (-4.5/10,-.1,0){\color{red}Haz incidente};
+
+
+\end{tikzpicture}
+
+\end{document}

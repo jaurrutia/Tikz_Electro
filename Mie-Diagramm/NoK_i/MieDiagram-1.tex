@@ -2,13 +2,16 @@
 
 \usepackage{tikz,pgfplots}
 \usepackage{physics}
+%\usepackage{tikz-3dplot-circleofsphere}
 
-\usetikzlibrary{decorations.shapes}
-\usetikzlibrary{arrows.meta,calc,decorations.markings,math,arrows.meta}
-\usetikzlibrary{%
-    decorations.pathreplacing,%
-    decorations.pathmorphing%
-}
+\usepackage{tikz-3dplot} 
+%
+%\usetikzlibrary{decorations.shapes}
+%\usetikzlibrary{arrows.meta,calc,decorations.markings,math,arrows.meta}
+%\usetikzlibrary{%
+%    decorations.pathreplacing,%
+%    decorations.pathmorphing%
+%}
 
 
 %------------   Todo está en 2D porque no entiendo 3D   :c    ------------%
@@ -16,35 +19,75 @@
 
 \begin{document}
 
+%Angle Definitions
+%-----------------
 
-\begin{tikzpicture}[scale=1]
-\shade[ball color=yellow, opacity = .7] (0,0) circle (1); 
-\coordinate (O) at (0,0);
+%set the plot display orientation
+%synatax: \tdplotsetdisplay{\theta_d}{\varphi_d}
+\tdplotsetmaincoords{60}{110}
+
+%define polar coordinates for some vector
+%TODO: look into using 3d spherical coordinate system
+\pgfmathsetmacro{\rvec}{1.3}
+\pgfmathsetmacro{\thetavec}{30}
+\pgfmathsetmacro{\varphivec}{60}
 
 
+\begin{tikzpicture}[scale=5, tdplot_main_coords]
 
+%set up some coordinates 
+	\coordinate (O) at (0,0,0);
+
+%determine a coordinate (P) using (r,\theta,\varphi) coordinates.  This command
+%also determines (Pxy), (Pxz), and (Pyz): the xy-, xz-, and yz-projections
+%of the point (P).
+%syntax: \tdplotsetcoord{Coordinate name without parentheses}{r}{\theta}{\varphi}
+	\tdplotsetcoord{P}{\rvec}{\thetavec}{\varphivec}
+
+%draw figure contents
+%--------------------
+
+%Draw the NP
+	\draw[tdplot_screen_coords,ball color=yellow, opacity = 1] (O) circle (.25);
+	\draw[color=blue, -, thick] (0,0,0) -- (.18,-.18,.18);	
+	\node at (.09,-.09,.15){\color{blue} $a$};
+	\node at (.25,-.25,.0){$n_m$};
+	\node at (.01,-.18,-.15){$n_p$};		
+	
 %draw the main coordinate system axes
-\draw[thick,->] (O) -- (-1.3,-1.3) node[anchor=north east]{$x$};
-\draw[thick,->] (O) -- (2,0) node[anchor= west]{$y$};
-\draw[thick,->] (O) -- (0,2) node[anchor=south]{$z$};
+	\draw[thick,- latex] (0,0,0) -- (.8,0,0) node[anchor=north east]{$x$};
+	\draw[thick,- latex] (0,0,0) -- (0,.8,0) node[anchor=north west]{$y$};
+	\draw[thick,- latex] (0,0,0) -- (0,0,.8) node[anchor=south]{$z$};
 
-\draw[thick,red,->] (O) -- (1.5,1) node[anchor=south west]{$\va{r}$};  %r=1.8, \theta=33.6
-\draw[-, dashed,red] (O) -- (1.5,-.5);
-\draw[-,dashed,red] (1.5,-.5) -- (1.5,1) ;
-
-\fill[red,opacity=.2] (O)--(1.5,-.5)--(1.5,1)--(O);
+%draw a vector from origin to point (P) 
+	\draw[thick,color=green, - latex] (O) -- (P);
+	\node at (1,.6,1.2) {\color{green} $\vb{r}$};
 	
-\path (O)++(62:1.2)node[anchor=south west]{$\theta$};    
-\draw[->](0,1.2)arc(90:34:1.2);
+%draw projection on xy plane, and a connecting line
+	\draw[dashed, color=green] (O) -- (Pxy);
+	\draw[dashed, color=green] (P) -- (Pxy);
+	\fill[green, opacity = .3] (O) --(Pxy)-- (P)--(O);	
 
-\path (O)++(-85:1.1)node[anchor=north west]{$\varphi$};    
-\draw[->](-.8,-.8)arc(-135:-21:1.15);
-	
-	
-\draw[thick,green,->] (O) -- (-.7,.7) node[anchor=west]{$\va{a}$};  
+%draw the angle \varphi, and label it
+	%syntax: \tdplotdrawarc[coordinate frame, draw options]{center point}{r}{angle}{label options}{label}
+	\tdplotdrawarc[- latex]{(O)}{0.6}{0}{\varphivec}{anchor=north}{$\varphi$}
 
-\path (O)++(.3,-.5) node{$n_p$};
-\path (O)++(-1,1.5) node{$n_m$};
+
+%set the rotated coordinate system so the x'-y' plane lies within the
+	%"theta plane" of the main coordinate system
+	%syntax: \tdplotsetthetaplanecoords{\varphi}
+	\tdplotsetthetaplanecoords{\varphivec}
+
+%draw theta arc and label, using rotated coordinate system
+	\tdplotdrawarc[tdplot_rotated_coords, - latex]{(0,0,0)}{0.6}{0}{\thetavec}{anchor=north east}{$\theta$}
+
+% Plane Wave
+	\foreach \i in {-3,...,3}{
+		\draw[thick,tdplot_screen_coords,red, - latex] (\i/10,-1,0)--(\i/10,-.5,0);}
+	\node[tdplot_screen_coords] at (4/10,-.5,0){\color{red}$\va{k}_i$};
+	\node[tdplot_screen_coords] at (6/10,-.9,0){\color{red}Haz incidente};
+
+
 
 	
 \end{tikzpicture}
